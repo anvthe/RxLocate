@@ -235,3 +235,11 @@ WHERE b.id = 1
   AND l.id = 1
 
 
+@Query(value = "SELECT b.brand_name, l.location_name, l.latitude, l.longitude, COUNT(*) " +
+               "FROM prescriptions p " +
+               "JOIN prescription_brands pb ON p.id = pb.prescription_id " +
+               "JOIN brands b ON pb.brand_id = b.id " +
+               "JOIN locations l ON p.location_id = l.id " +
+               "WHERE b.id = ?1 AND l.id = ?2 " +
+               "GROUP BY b.brand_name, l.location_name, l.latitude, l.longitude",
+       nativeQuery = true)
