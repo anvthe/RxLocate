@@ -1,5 +1,7 @@
 package com.rko.springsecurity.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class AuthenticationRequestDTO {
 
-    private String firstname;
-    private String lastname;
-    private String email;
+    @NotBlank
+    private String username;
+
+    @NotNull
     private String password;
 }
+
