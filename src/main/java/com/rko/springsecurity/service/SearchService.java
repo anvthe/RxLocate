@@ -1,44 +1,34 @@
 package com.rko.springsecurity.service;
 
-import com.rko.springsecurity.domain.Location;
-import com.rko.springsecurity.dto.SearchResultDTO;
+import com.rko.springsecurity.dto.DistrictDTO;
+import com.rko.springsecurity.dto.DivisionDTO;
 import com.rko.springsecurity.repository.PrescriptionRepository;
-import jakarta.persistence.Id;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SearchService {
-    @Autowired
-    private BrandService brandService;
 
-    @Autowired
-    private LocationService locationService;
+    private final PrescriptionRepository prescriptionRepository;
 
-    @Autowired
-    private PrescriptionService prescriptionService;
-
-
-    public SearchResultDTO searchBrandNameByLocation(String brandName, String locationName) {
-        SearchResultDTO result = new SearchResultDTO();
-        String brand = brandService.getBrandByName(brandName);
-        if (brand == null) {
-            result.setError("Brand not found");
-            return result;
-        }
-
-        Location location = locationService.getLocationByName(locationName);
-        if (location == null) {
-            result.setError("Location not found");
-            return result;
-        }
-
-        int brandUsersCount = prescriptionService.countUsersByBrandAndLocation(brandName, locationName);
-
-        result.setBrandUsersCount(brandUsersCount);
-        result.setLocation(location);
-        return result;
+    public List<DivisionDTO> getDivisionsByDrugName(String drugName) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findDivisionsByDrugName(drugName, pageable);
     }
+
+    public List<DivisionDTO> getDivisionsByDrugId(Long drugId) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findDivisionsByDrugId(drugId, pageable);
+    }
+
+    public List<DistrictDTO> getDistrictsByDivisionAndDrugName(String drugName, String divisionName) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findDistrictsByDivisionAndDrugName(drugName, divisionName, pageable);
+    }
+
 }

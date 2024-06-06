@@ -1,6 +1,7 @@
-package com.rko.springsecurity.entity;
+package com.rko.springsecurity.domain;
 
 
+import com.rko.springsecurity.domain.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -23,16 +24,15 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String firstname;
+
     private String lastname;
 
     @Column(unique = true)
-    @NotBlank(message = "Username is mandatory")
-    private String email;
+    @NotBlank(message = "Username must be")
+    private String username;
 
-
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "Username must be")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -45,7 +45,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -72,7 +72,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
-    // Constructors, getters, and setters
 }

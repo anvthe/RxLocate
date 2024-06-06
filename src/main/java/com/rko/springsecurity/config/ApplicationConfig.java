@@ -20,12 +20,11 @@ import org.springframework.stereotype.Service;
 @EnableWebSecurity
 @Service
 public class ApplicationConfig {
-
     private final UserRepository repository;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> repository.findByEmail(username)
+        return username -> repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

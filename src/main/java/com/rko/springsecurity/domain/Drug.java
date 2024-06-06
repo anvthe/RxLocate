@@ -6,23 +6,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "generics")
-public class Generic {
+@Table(name = "drugs")
+public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "drug_name")
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "generic", cascade = CascadeType.ALL)
-    private List<Drug> drugs;
+    private String formula;
 
+    private String strength;
+
+    @ManyToOne
+    @JoinColumn(name = "generic_id")
+    private Generic generic;
+
+
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
 
 }

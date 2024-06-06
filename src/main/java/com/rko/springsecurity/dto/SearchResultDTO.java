@@ -1,6 +1,6 @@
 package com.rko.springsecurity.dto;
 
-import com.rko.springsecurity.domain.Location;
+import com.rko.springsecurity.domain.Area;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class SearchResultDTO {
     private int brandUsersCount;
     private String brandName;
-    private Location location;
+    private Area area;
     private String error;
 }

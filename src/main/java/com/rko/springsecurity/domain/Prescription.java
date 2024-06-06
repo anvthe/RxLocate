@@ -22,16 +22,14 @@ public class Prescription {
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @JoinColumn(name = "area_id")
+    private Area area;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "prescription_brand",
+            name = "prescription_drugs",
             joinColumns = @JoinColumn(name = "prescription_id"),
-            inverseJoinColumns = @JoinColumn(name = "brand_id")
+            inverseJoinColumns = @JoinColumn(name = "drug_id")
     )
-    private List<Brand> brands;
-
-    // Constructors, getters, and setters
+    private List<Drug> drugs;
 }

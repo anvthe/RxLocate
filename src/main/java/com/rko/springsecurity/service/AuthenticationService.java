@@ -1,52 +1,44 @@
 package com.rko.springsecurity.service;
 
-import com.rko.springsecurity.dto.AuthenticationRequest;
-import com.rko.springsecurity.dto.AuthenticationResponse;
-import com.rko.springsecurity.dto.RegisterRequest;
-import com.rko.springsecurity.entity.User;
-import com.rko.springsecurity.entity.Role;
+import com.rko.springsecurity.domain.User;
+import com.rko.springsecurity.dto.AuthenticationRequestDTO;
+import com.rko.springsecurity.dto.RegisterRequestDTO;
+import com.rko.springsecurity.domain.enums.Role;
 import com.rko.springsecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private  final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public void register(RegisterRequestDTO request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
-                .email(request.getEmail())
+                .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
-
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+    public String authenticate(AuthenticationRequestDTO request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),
+                request.getPassword()));
+        try {
+            var user = repository.findByUsername(request.getUsername()).orElseThrow();
+            return jwtService.generateToken(user);
+        } catch (UsernameNotFoundException usernameNotFoundException) {
+            return usernameNotFoundException.getMessage();
+        }
     }
 }

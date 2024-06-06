@@ -13,11 +13,12 @@ public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String name;
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    private List<Brand> brands;
+    private List<Drug> drugs;
 }
 
 

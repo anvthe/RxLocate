@@ -1,17 +1,28 @@
 package com.rko.springsecurity.service;
 
+import com.rko.springsecurity.domain.Prescription;
+import com.rko.springsecurity.dto.AreaDTO;
+import com.rko.springsecurity.dto.DrugDTO;
+import com.rko.springsecurity.dto.PrescriptionDTO;
 import com.rko.springsecurity.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    public int countUsersByBrandAndLocation(String brandName, String locationName) {
-        return prescriptionRepository.countUsersByBrandAndLocation(brandName, locationName);
+    public PrescriptionDTO getPrescriptionDetailsByRxNumber(Long prescriptionId) {
+        Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);
+        return prescription.map(PrescriptionDTO::from).orElse(null);
     }
 
 }

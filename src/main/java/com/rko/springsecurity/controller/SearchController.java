@@ -1,29 +1,40 @@
 package com.rko.springsecurity.controller;
 
-import com.rko.springsecurity.dto.SearchResultDTO;
+import com.rko.springsecurity.dto.DistrictDTO;
+import com.rko.springsecurity.dto.DivisionDTO;
+
 import com.rko.springsecurity.service.SearchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/search")
+@RequiredArgsConstructor
 public class SearchController {
-    @Autowired
-    private SearchService searchService;
+    private final SearchService searchService;
 
-    @GetMapping
-    public ResponseEntity<SearchResultDTO> search(
-            @RequestParam("brandName") String brandName,
-            @RequestParam("locationName") String locationName) {
-        SearchResultDTO result = searchService.searchBrandNameByLocation(brandName, locationName);
-        if (result == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(result);
+    @GetMapping("/{drugName}")
+    public ResponseEntity<?> getDivisionsByDrugName(@PathVariable String drugName) {
+        List<DivisionDTO> divisions = searchService.getDivisionsByDrugName(drugName);
+        return ResponseEntity.ok(divisions);
     }
 
+    @GetMapping("/by/{drugId}")
+    public ResponseEntity<?> getDivisionsByDrugId(@PathVariable Long drugId) {
+        List<DivisionDTO> divisions = searchService.getDivisionsByDrugId(drugId);
+        return ResponseEntity.ok(divisions);
+    }
+
+    @GetMapping("/{drugName}/{divisionName}")
+    public ResponseEntity<?> getDistrictsByDivisionAndDrugName(@PathVariable String drugName,
+                                                               @PathVariable String divisionName) {
+        List<DistrictDTO> districts = searchService.getDistrictsByDivisionAndDrugName(drugName, divisionName);
+        return ResponseEntity.ok(districts);
+    }
 }
