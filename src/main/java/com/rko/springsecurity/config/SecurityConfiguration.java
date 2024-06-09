@@ -18,7 +18,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    public static final String[] WHITE_LIST = {"/auth/**"};
+    public static final String[] WHITE_LIST = {"/auth/**", "/download/**"};
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 

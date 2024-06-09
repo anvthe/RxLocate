@@ -1,16 +1,17 @@
 package com.rko.springsecurity.dto;
 
+import com.rko.springsecurity.domain.Area;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.awt.geom.Area;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AreaDTO {
     private Long areaId;
+
+    private String districtName;
 
     private String areaName;
 
@@ -23,11 +24,15 @@ public class AreaDTO {
     private double lng;
 
 
-    public static AreaDTO from(Area area) {
-        AreaDTO ar = new AreaDTO();
-        ar.areaName = ar.getAreaName();
-        ar.lat = ar.getLat();
-        ar.lng = ar.getLng();
-        return ar;
+    public static AreaDTO from(Area area, String drugName, long prescriptionCount, double lat, double lng) {
+        AreaDTO dto = new AreaDTO();
+        dto.areaId = area.getId();
+        dto.districtName = dto.getDistrictName();
+        dto.areaName = area.getName();
+        dto.drugName = drugName;
+        dto.prescriptionCount = prescriptionCount;
+        dto.lat = lat;
+        dto.lng = lng;
+        return dto;
     }
 }
