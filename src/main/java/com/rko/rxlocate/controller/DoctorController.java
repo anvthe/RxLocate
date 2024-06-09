@@ -29,6 +29,12 @@ public class DoctorController {
         List<DoctorProjection> doctors = doctorRepository.findDoctorsWithDivisionByDrugId(drugId);
         return ResponseEntity.ok(doctors);
     }
+    @GetMapping("/by/{divisionId}/{drugId}")
+    public ResponseEntity<?> getDoctorsByDivisionAndDrug(@PathVariable Long divisionId,
+                                                         @PathVariable Long drugId) {
+        List<DoctorProjection> doctorDTOS = doctorRepository.findDoctorsWithDivisionIdByDrugId(divisionId, drugId);
+        return ResponseEntity.ok(doctorDTOS);
+    }
 
 
 }
