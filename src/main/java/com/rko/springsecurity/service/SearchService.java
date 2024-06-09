@@ -1,5 +1,6 @@
 package com.rko.springsecurity.service;
 
+import com.rko.springsecurity.dto.AreaDTO;
 import com.rko.springsecurity.dto.DistrictDTO;
 import com.rko.springsecurity.dto.DivisionDTO;
 import com.rko.springsecurity.repository.PrescriptionRepository;
@@ -29,6 +30,21 @@ public class SearchService {
     public List<DistrictDTO> getDistrictsByDivisionAndDrugName(String drugName, String divisionName) {
         Pageable pageable = PageRequest.of(0, 10);
         return prescriptionRepository.findDistrictsByDivisionAndDrugName(drugName, divisionName, pageable);
+    }
+
+    public List<DistrictDTO> getDistrictsByDivisionAndDrugId(Long drugId, Long divisionId) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findDistrictsByDivisionAndDrugId(drugId, divisionId, pageable);
+    }
+
+    public List<AreaDTO> getAreasByDivisionAndDistrictAndDrugName(String drugName, String divisionName, String districtName) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findAreasByDivisionAndDistrictAndDrugName(drugName, divisionName, districtName, pageable);
+    }
+
+    public List<AreaDTO> getAreasByDivisionAndDistrictAndDrugId(Long drugId, Long divisionId, Long districtId) {
+        Pageable pageable = PageRequest.of(0, 10);
+        return prescriptionRepository.findAreasByDivisionAndDistrictAndDrugId(drugId, divisionId, districtId, pageable);
     }
 
 }
