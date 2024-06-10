@@ -28,7 +28,6 @@ public class Drug {
     @JoinColumn(name = "generic_id")
     private Generic generic;
 
-
     @ManyToOne
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;

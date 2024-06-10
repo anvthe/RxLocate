@@ -23,7 +23,6 @@ public class AreaDTO {
 
     private double lng;
 
-
     public static AreaDTO from(Area area, String drugName, long prescriptionCount, double lat, double lng) {
         AreaDTO dto = new AreaDTO();
         dto.areaId = area.getId();

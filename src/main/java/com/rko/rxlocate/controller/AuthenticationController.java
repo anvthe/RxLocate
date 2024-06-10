@@ -24,9 +24,7 @@ public class AuthenticationController {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-
         service.register(request);
-
         return ResponseEntity.ok("User created successfully");
     }
 
@@ -35,7 +33,6 @@ public class AuthenticationController {
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-
         return ResponseEntity.ok(service.authenticate(request));
     }
 }

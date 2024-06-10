@@ -440,7 +440,7 @@ INSERT INTO patients (name, phone, age) VALUES
                                             ('Sultana Jahan', '01711327099', '45');
 
 INSERT INTO drugs (drug_name, formula, strength, generic_id, vendor_id)VALUES
-                                                                           ('Ibuprofen', 'Tablet', '200mg', 1, 1),
+                                                                           ('Napa', 'Tablet', '500mg', 90, 4),
                                                                            ('Amoxicillin', 'Capsule', '500mg', 2, 2),
                                                                            ('Cetirizine', 'Liquid', '5mg/5ml', 3, 3),
                                                                            ('Insulin Glargine', 'Injection', '100U/ml', 4, 4),

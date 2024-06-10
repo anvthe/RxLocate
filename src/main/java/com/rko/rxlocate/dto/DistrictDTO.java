@@ -23,7 +23,6 @@ public class DistrictDTO {
 
     private double lng;
 
-
     public static DistrictDTO from(District district, String drugName, long prescriptionCount, double lat, double lng) {
         DistrictDTO dto = new DistrictDTO();
         dto.districtId = district.getId();

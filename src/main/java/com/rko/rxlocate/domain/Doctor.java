@@ -28,7 +28,6 @@ public class Doctor {
     @NotBlank(message = "BMDC no is mandatory")
     private String bmdcId;
 
-
     @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private Set<Prescription> prescriptions;
 

@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+
+    Optional<Doctor> findByBmdcId(String bmdcId);
 
     @Query(value = "SELECT DISTINCT d.name AS doctorName, " +
             "                d.bmdc AS doctorBMDC, " +
