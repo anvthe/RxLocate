@@ -30,7 +30,7 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
             "JOIN dis.division divi " +
             "JOIN p.drugs dr " +
             "WHERE dr.id = :drugId " +
-            "GROUP BY divi.id, dr.name " +
+            "GROUP BY divi.id, dr.id " +
             "ORDER BY COUNT(p) DESC")
     List<DivisionDTO> findDivisionsByDrugId(@Param("drugId") Long drugId,
                                             Pageable pageable);
@@ -56,7 +56,7 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
             "JOIN dis.division d " +
             "JOIN p.drugs dr " +
             "WHERE dr.id = :drugId AND d.id = :divisionId " +
-            "GROUP BY dis.id, d.name, dis.name, dis.lat, dis.lng " +
+            "GROUP BY dis.id, d.name, dr.id, dis.name, dis.lat, dis.lng " +
             "ORDER BY COUNT(p) DESC")
     List<DistrictDTO> findDistrictsByDivisionAndDrugId(@Param("drugId") Long drugId,
                                                        @Param("divisionId") Long divisionId,

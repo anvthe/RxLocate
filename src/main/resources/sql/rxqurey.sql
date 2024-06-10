@@ -62,9 +62,9 @@ CREATE TABLE districts (
 
 CREATE TABLE areas (
                        id INT AUTO_INCREMENT PRIMARY KEY,
-                       name VARCHAR(255) unique not null ,
-                       lat DOUBLE unique not null ,
-                       lng DOUBLE unique not null,
+                       name VARCHAR(255) not null ,
+                       lat DOUBLE not null ,
+                       lng DOUBLE not null,
                        district_id INT,
                        FOREIGN KEY (district_id) REFERENCES districts(id)
 );
@@ -82,7 +82,43 @@ CREATE TABLE prescriptions (
 CREATE TABLE prescription_drugs (   id INT AUTO_INCREMENT PRIMARY KEY,
                                     prescription_id INT,
                                     drug_id INT,
-
                                     FOREIGN KEY (prescription_id) REFERENCES prescriptions(id),
                                     FOREIGN KEY (drug_id) REFERENCES drugs(id)
 );
+
+INSERT INTO prescriptions (doctor_id, patient_id, area_id)
+SELECT
+    6 AS doctor_id,
+    (FLOOR(RAND() * 30) + 1) AS patient_id,
+    (FLOOR(RAND() * 100) + 1) AS area_id
+FROM
+    information_schema.tables AS rand1
+        CROSS JOIN information_schema.tables AS rand2
+LIMIT 20;
+
+
+INSERT INTO prescription_drugs (prescription_id, drug_id)
+SELECT
+    prescription_id,
+    selected_drugs.drug_id  -- Specify the table name or alias for drug_id
+FROM (
+         SELECT
+             prescription_id,
+             (FLOOR(RAND() * 81) + 1) AS drug_id
+         FROM (
+                  SELECT
+                      id AS prescription_id
+                  FROM
+                      prescriptions
+                  WHERE
+                      id BETWEEN 1 AND 407
+              ) AS prescription_ids
+     ) AS prescription_drugs
+         CROSS JOIN (
+    SELECT
+        id AS drug_id
+    FROM
+        drugs
+    ORDER BY
+        RAND()
+) AS selected_drugs;
