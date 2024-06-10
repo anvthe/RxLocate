@@ -20,7 +20,7 @@ public class DivisionController {
     private final DivisionService divisionService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<DivisionDTO>> getAllDivisions() {
+    public ResponseEntity<?> getAllDivisions() {
         return new ResponseEntity<>(divisionService.getAllDivisions(), HttpStatus.OK);
     }
 }

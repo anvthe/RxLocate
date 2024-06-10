@@ -15,6 +15,12 @@ import java.util.List;
 public class DrugController {
     private final DrugService drugService;
 
+    @GetMapping("/list")
+    public ResponseEntity<List<DrugDTO>> getAllDrugs() {
+        List<DrugDTO> drugs = drugService.getAllDrugs();
+        return ResponseEntity.ok(drugs);
+    }
+
     @GetMapping("/list/{name}")
     public ResponseEntity<?> getAllDrugs(@PathVariable String name) {
         List<DrugDTO> drugs = drugService.getAllDrugs(name);
