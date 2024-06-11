@@ -51,9 +51,9 @@ public class SearchService {
     public List<?> mapSummary(String drugName, String divisionName) {
         Pageable pageable = PageRequest.of(0, 10);
         if (Objects.isNull(divisionName)) {
-            return prescriptionRepository.findDivisionByDrugName(drugName, pageable);
+            return prescriptionRepository.findDivisionsByDrugName(drugName, pageable);
         } else {
-            return prescriptionRepository.findDistrictByDivisionAndDrugName(drugName, divisionName, pageable);
+            return prescriptionRepository.findDistrictsByDivisionAndDrugName(drugName, divisionName, pageable);
         }
     }
 

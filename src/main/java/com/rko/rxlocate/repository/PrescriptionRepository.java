@@ -136,27 +136,5 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
     List<DistrictPrescriptionProjection> excelDataByDrugNameAndDivisionName(@Param("drugId") Long drugId,
                                                                             @Param("divisionId") Long divisionId);
 
-    @Query("SELECT new com.rko.rxlocate.dto.DivisionDTO(divi.id, divi.name, dr.name, COUNT(p), divi.lat, divi.lng) " +
-            "FROM Prescription p " +
-            "JOIN p.area ar " +
-            "JOIN ar.district dis " +
-            "JOIN dis.division divi " +
-            "JOIN p.drugs dr " +
-            "WHERE dr.name LIKE %:drugName% " +
-            "GROUP BY divi.id, divi.name, dr.name, divi.lat, divi.lng " +
-            "ORDER BY COUNT(p) DESC")
-    List<DivisionDTO> findDivisionByDrugName(@Param("drugName") String drugName, Pageable pageable);
-
-    @Query("SELECT new com.rko.rxlocate.dto.DistrictDTO(dis.id, divi.name, dis.name, dr.name, COUNT(p), dis.lat, dis.lng) " +
-            "FROM Prescription p " +
-            "JOIN p.area ar " +
-            "JOIN ar.district dis " +
-            "JOIN dis.division divi " +
-            "JOIN p.drugs dr " +
-            "WHERE dr.name = :drugName AND divi.name = :divisionName " +
-            "GROUP BY dis.id, divi.name, dis.name, dr.name, dis.lat, dis.lng " +
-            "ORDER BY COUNT(p) DESC")
-    List<DistrictDTO> findDistrictByDivisionAndDrugName(@Param("drugName") String drugName, @Param("divisionName") String divisionName, Pageable pageable);
-
 }
 
