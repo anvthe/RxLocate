@@ -68,7 +68,7 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
             "JOIN ar.district dis " +
             "JOIN dis.division d " +
             "JOIN p.drugs dr " +
-            "WHERE dr.name = :drugName AND d.name = :divisionName AND dis.name = :districtName " +
+            "WHERE dr.name LIKE %:drugName%  AND d.name = :divisionName AND dis.name = :districtName " +
             "GROUP BY ar.id, dis.name, ar.name, dr.name, ar.lat, ar.lng " +
             "ORDER BY COUNT(p) DESC")
     List<AreaDTO> findAreasByDivisionAndDistrictAndDrugName(@Param("drugName") String drugName,
