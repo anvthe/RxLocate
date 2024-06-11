@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +46,15 @@ public class SearchService {
     public List<AreaDTO> getAreasByDivisionAndDistrictAndDrugId(Long drugId, Long divisionId, Long districtId) {
         Pageable pageable = PageRequest.of(0, 10);
         return prescriptionRepository.findAreasByDivisionAndDistrictAndDrugId(drugId, divisionId, districtId, pageable);
+    }
+
+    public List<?> mapSummary(String drugName, String divisionName) {
+        Pageable pageable = PageRequest.of(0, 10);
+        if (Objects.isNull(divisionName)) {
+            return prescriptionRepository.findDivisionByDrugName(drugName, pageable);
+        } else {
+            return prescriptionRepository.findDistrictByDivisionAndDrugName(drugName, divisionName, pageable);
+        }
     }
 
 }

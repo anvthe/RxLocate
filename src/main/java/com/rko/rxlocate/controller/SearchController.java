@@ -6,10 +6,7 @@ import com.rko.rxlocate.dto.DivisionDTO;
 import com.rko.rxlocate.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -59,5 +56,12 @@ public class SearchController {
                                                                     @PathVariable Long districtId) {
         List<AreaDTO> areas = searchService.getAreasByDivisionAndDistrictAndDrugId(drugId, divisionId, districtId);
         return ResponseEntity.ok(areas);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<?> getPrescriptionSummaryByDrugOrDrugAndDivision(@RequestParam String drugName,
+                                                                           @RequestParam(required = false) String divisionName) {
+        List<?> mapSummary = searchService.mapSummary(drugName, divisionName);
+        return ResponseEntity.ok(mapSummary);
     }
 }
