@@ -26,6 +26,11 @@ public class ExcelService {
         return ExcelHelper.divisionDataToExcel(divisionPrescriptionProjections);
     }
 
+    public ByteArrayInputStream getExcelDataForDistrict(String drugName, String  divisionName) {
+        List<DistrictPrescriptionProjection> districtPrescriptionProjections = prescriptionRepository.excelDataByDrugNameAndDivisionName(drugName, divisionName);
+        return ExcelHelper.districtDataToExcel(districtPrescriptionProjections);
+    }
+
     public ByteArrayInputStream getExcelDataForDistrict(Long drugId, Long divisionId) {
         List<DistrictPrescriptionProjection> districtPrescriptionProjections = prescriptionRepository.excelDataByDrugNameAndDivisionName(drugId, divisionId);
         return ExcelHelper.districtDataToExcel(districtPrescriptionProjections);

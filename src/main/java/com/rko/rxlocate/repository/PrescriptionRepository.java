@@ -135,6 +135,20 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
             "ORDER BY prescriptionCount DESC ", nativeQuery = true)
     List<DistrictPrescriptionProjection> excelDataByDrugNameAndDivisionName(@Param("drugId") Long drugId,
                                                                             @Param("divisionId") Long divisionId);
+    @Query(value = "SELECT " +
+            "    dis.name AS districtName, " +
+            "    COUNT(DISTINCT p.id) AS prescriptionCount " +
+            "FROM prescriptions p " +
+            "JOIN areas ar ON p.area_id = ar.id " +
+            "JOIN prescription_drugs pd ON p.id = pd.prescription_id " +
+            "JOIN drugs dr ON dr.id = pd.drug_id " +
+            "JOIN districts dis ON ar.district_id = dis.id " +
+            "JOIN divisions divi ON dis.division_id = dis.id " +
+            "WHERE dr.id = :drugName  AND divi.id = :divisionName  " +
+            "GROUP BY divi.id, ar.id " +
+            "ORDER BY prescriptionCount DESC ", nativeQuery = true)
+    List<DistrictPrescriptionProjection> excelDataByDrugNameAndDivisionName(@Param("drugName") String drugName,
+                                                                            @Param("divisionName") String divisionName);
 
 }
 
