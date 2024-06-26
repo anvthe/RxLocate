@@ -24,7 +24,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             "         JOIN prescription_drugs pd on p.id = pd.prescription_id " +
             "         JOIN drugs dr on dr.id = pd.drug_id " +
             "WHERE dr.drug_name = :drugName ", nativeQuery = true)
-    List<DoctorProjection> findDoctorsWithDivisionByDrug(@Param("drugName") String drugName);
+    List<DoctorProjection> findDoctorsByDrugName(@Param("drugName") String drugName);
 
     @Query(value = "SELECT DISTINCT d.name AS doctorName, " +
             "                d.bmdc AS doctorBMDC, " +
@@ -37,7 +37,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             "         JOIN prescription_drugs pd on p.id = pd.prescription_id " +
             "         JOIN drugs dr on dr.id = pd.drug_id " +
             "WHERE dr.id = :drugId", nativeQuery = true)
-    List<DoctorProjection> findDoctorsWithDivisionByDrugId(@Param("drugId") Long drugId);
+    List<DoctorProjection> findDoctorsByDrugId(@Param("drugId") Long drugId);
 
     @Query(value = "SELECT DISTINCT d.name AS doctorName, " +
             "                d.bmdc AS doctorBMDC, " +
@@ -64,7 +64,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             "         JOIN prescription_drugs pd on p.id = pd.prescription_id " +
             "         JOIN drugs dr on dr.id = pd.drug_id " +
             "WHERE divi.id = :divisionId and dr.id = :drugId", nativeQuery = true)
-    List<DoctorProjection> findDoctorsWithDivisionIdByDrugId(@Param("divisionId") Long divisionId, @Param("drugId") Long drugId);
+    List<DoctorProjection> findDoctorsByDivisionIdAndDrugId(@Param("divisionId") Long divisionId, @Param("drugId") Long drugId);
 }
 
 

@@ -2,14 +2,13 @@ package com.rko.rxlocate.controller;
 
 import com.rko.rxlocate.dto.DoctorDTO;
 import com.rko.rxlocate.dto.DoctorProjection;
-import com.rko.rxlocate.repository.DoctorRepository;
 import com.rko.rxlocate.service.DoctorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,23 +20,24 @@ public class DoctorController {
 
     private final DoctorService doctorService;
 
-    private final DoctorRepository doctorRepository;
-
     @GetMapping("/info/{bmdcId}")
     public ResponseEntity<?> getDoctorByBmdcId(@PathVariable String bmdcId) {
         DoctorDTO doctor = doctorService.findByBmdcId(bmdcId);
+
         return ResponseEntity.ok(doctor);
     }
 
     @GetMapping("/{drugName}")
     public ResponseEntity<?> getDoctorsByDrug(@PathVariable String drugName) {
-        List<DoctorProjection> doctors = doctorRepository.findDoctorsWithDivisionByDrug(drugName);
+        List<DoctorProjection> doctors = doctorService.getDoctorsByDrugName(drugName);
+
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/by/{drugId}")
     public ResponseEntity<?> getDoctorsByDrugId(@PathVariable Long drugId) {
-        List<DoctorProjection> doctors = doctorRepository.findDoctorsWithDivisionByDrugId(drugId);
+        List<DoctorProjection> doctors = doctorService.getDoctorsByDrugId(drugId);
+
         return ResponseEntity.ok(doctors);
     }
 
@@ -51,9 +51,9 @@ public class DoctorController {
     @GetMapping("/by/{divisionId}/{drugId}")
     public ResponseEntity<?> getDoctorsByDivisionAndDrug(@PathVariable Long divisionId,
                                                          @PathVariable Long drugId) {
-        List<DoctorProjection> doctorDTOS = doctorRepository.findDoctorsWithDivisionIdByDrugId(divisionId, drugId);
+        List<DoctorProjection> doctorDTOS = doctorService.getDoctorsByDivisionIdAndDrugId(divisionId, drugId);
+
         return ResponseEntity.ok(doctorDTOS);
     }
-
 
 }

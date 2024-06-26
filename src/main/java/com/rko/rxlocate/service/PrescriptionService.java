@@ -3,15 +3,15 @@ package com.rko.rxlocate.service;
 import com.rko.rxlocate.domain.Prescription;
 import com.rko.rxlocate.dto.PrescriptionDTO;
 import com.rko.rxlocate.repository.PrescriptionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PrescriptionService {
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    private final PrescriptionRepository prescriptionRepository;
 
     public PrescriptionDTO getPrescriptionDetailsByRxNumber(Long prescriptionId) {
         Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);

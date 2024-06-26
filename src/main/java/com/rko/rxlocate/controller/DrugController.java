@@ -18,18 +18,30 @@ public class DrugController {
     @GetMapping("/list")
     public ResponseEntity<List<DrugDTO>> getAllDrugs() {
         List<DrugDTO> drugs = drugService.getAllDrugs();
+
         return ResponseEntity.ok(drugs);
     }
 
     @GetMapping("/list/{name}")
-    public ResponseEntity<?> getAllDrugs(@PathVariable String name) {
-        List<DrugDTO> drugs = drugService.getAllDrugs(name);
+    public ResponseEntity<?> getAllDrugs(@PathVariable String name,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size) {
+        List<DrugDTO> drugs = drugService.getAllDrugs(name, page, size);
+
         return new ResponseEntity<>(drugs, HttpStatus.OK);
     }
 
     @GetMapping("/info/{drugName}")
     public ResponseEntity<DrugDetailsDTO> getDrugByName(@PathVariable String drugName) {
         DrugDetailsDTO drug = drugService.fetchDrugInfoByName(drugName);
+
+        return ResponseEntity.ok(drug);
+    }
+
+    @GetMapping("/details/{drugId}")
+    public ResponseEntity<?> getDrugDetailsById(@PathVariable Long drugId) {
+        DrugDetailsDTO drug = drugService.getDrugDetailsById(drugId);
+
         return ResponseEntity.ok(drug);
     }
 }

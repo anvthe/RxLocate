@@ -42,7 +42,7 @@ public class SearchController {
         return ResponseEntity.ok(districts);
     }
 
-    @GetMapping("/{drugName}/{divisionName}/{districtName}")
+    @GetMapping("/{drugName}/{divisionName}/{districtName}")  //TODO Division name is not needed during district-wise search
     public ResponseEntity<?> getAreasByDivisionAndDistrictAndDrugName(@PathVariable String drugName,
                                                                       @PathVariable String divisionName,
                                                                       @PathVariable String districtName) {

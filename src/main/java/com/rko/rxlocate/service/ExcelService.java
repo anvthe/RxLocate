@@ -18,11 +18,13 @@ public class ExcelService {
 
     public ByteArrayInputStream getExcelDataForDivision(String drugName) {
         List<DivisionPrescriptionProjection> divisionPrescriptionProjections = prescriptionRepository.excelDataByDrugName(drugName);
+
         return ExcelHelper.divisionDataToExcel(divisionPrescriptionProjections);
     }
 
     public ByteArrayInputStream getExcelDataForDivision(Long drugId) {
         List<DivisionPrescriptionProjection> divisionPrescriptionProjections = prescriptionRepository.excelDataByDrugId(drugId);
+
         return ExcelHelper.divisionDataToExcel(divisionPrescriptionProjections);
     }
 
@@ -33,8 +35,8 @@ public class ExcelService {
 
     public ByteArrayInputStream getExcelDataForDistrict(Long drugId, Long divisionId) {
         List<DistrictPrescriptionProjection> districtPrescriptionProjections = prescriptionRepository.excelDataByDrugNameAndDivisionName(drugId, divisionId);
+
         return ExcelHelper.districtDataToExcel(districtPrescriptionProjections);
     }
-
 
 }
